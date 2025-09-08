@@ -3,7 +3,7 @@
    js/admin-auth.js
    ====================== */
 
-// Professional environment detection
+// API Configuration - Environment-aware
 const API_BASE_URL = (() => {
     const hostname = window.location.hostname;
     
@@ -14,7 +14,7 @@ const API_BASE_URL = (() => {
     } else if (hostname === 'staging.hairbyrhi.com') {
         return 'https://hairbyrhi-staging.up.railway.app';
     } else if (hostname === 'hairbyrhi.com' || hostname === 'www.hairbyrhi.com') {
-        return 'https://PRODUCTION_API_URL_HERE'; // Will set when production is ready
+        return 'https://PRODUCTION_API_URL_HERE'; // Will update when production is ready
     } else {
         console.error('Unknown environment:', hostname);
         return null;
@@ -23,7 +23,7 @@ const API_BASE_URL = (() => {
 
 console.log('API URL configured:', API_BASE_URL);
 
-   // Admin Authentication System
+// Admin Authentication System
 class AdminLogin {
     constructor() {
         this.form = document.getElementById('loginForm');
@@ -189,7 +189,7 @@ class AdminLogin {
         this.setLoading(true);
         
         try {
-            // Make API call to your authentication endpoint
+            // Make API call using environment-aware URL
             const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -332,4 +332,5 @@ window.addEventListener('load', () => {
 });
 
 // Export for use in other files
+//Just needed an extraline that would force a push - delete this line later
 window.AuthUtils = AuthUtils;
