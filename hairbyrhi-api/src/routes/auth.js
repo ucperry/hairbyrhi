@@ -73,7 +73,7 @@ router.post('/login', async (req, res) => {
     }
 
     await pool.query(
-      'UPDATE admin_users SET failed_login_attempts = 0, locked_until = NULL, last_login = CURRENT_TIMESTAMP WHERE id = $1',
+      'UPDATE admin_users SET failed_login_attempts = 0, locked_until = NULL, last_login_at = CURRENT_TIMESTAMP WHERE id = $1',
       [user.id]
     );
 
