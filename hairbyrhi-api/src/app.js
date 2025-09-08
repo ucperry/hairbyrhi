@@ -9,7 +9,6 @@ const app = express();
 app.use(helmet());
 // CORS configuration for production
 const corsOptions = {
-  const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? [
         'https://hairbyrhi.com', 
