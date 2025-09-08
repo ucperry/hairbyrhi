@@ -37,7 +37,7 @@ message: 'Too many requests from this IP, please try again later.'
 app.use('/api/', limiter);
 
 // Body parsing middleware
-app.use(express.json({ limit: '10mb' }));
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Static file serving - CORRECTED PATH
@@ -110,4 +110,11 @@ error: process.env.NODE_ENV === 'production'
 ...(process.env.NODE_ENV !== 'production' && { stack: error.stack })
  });
 });
+
+// Start server
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+
 module.exports = app;
