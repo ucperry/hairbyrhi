@@ -3,7 +3,19 @@
    js/admin-auth.js
    ====================== */
 
-// Admin Authentication System
+// API Configuration - Dynamic URL based on environment
+const API_BASE_URL = (() => {
+    const hostname = window.location.hostname;
+    
+    if (hostname === 'localhost' || hostname === '127.0.0.1') {
+        return 'http://localhost:3000';
+    } else {
+        // Production API URL - we'll update this with your Railway URL
+        return 'https://RAILWAY_URL_PLACEHOLDER';
+    }
+})();
+
+   // Admin Authentication System
 class AdminLogin {
     constructor() {
         this.form = document.getElementById('loginForm');
@@ -170,7 +182,7 @@ class AdminLogin {
         
         try {
             // Make API call to your authentication endpoint
-            const response = await fetch('http://localhost:3000/api/auth/login', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -255,7 +267,7 @@ const AuthUtils = {
         if (!token) return false;
 
         try {
-            const response = await fetch('http://localhost:3000/api/auth/verify', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
                 method: 'GET',
                 headers: {
                     'Authorization': `Bearer ${token}`
