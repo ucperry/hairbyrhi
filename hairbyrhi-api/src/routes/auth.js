@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
     }
 
     const userResult = await pool.query(
-      'SELECT id, email, name, password_hash, role, is_active, failed_login_attempts, locked_until FROM admin_users WHERE email = $1',
+      'SELECT id, email, CONCAT(first_name, \' \', last_name) as name, password_hash, role, is_active, failed_login_attempts, locked_until FROM admin_users WHERE email = $1',
       [email.toLowerCase()]
     );
 
@@ -130,7 +130,7 @@ router.get('/verify', async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const userResult = await pool.query(
-      'SELECT id, email, name, role, is_active FROM admin_users WHERE id = $1 AND is_active = true',
+      'SELECT id, email, CONCAT(first_name, \' \', last_name) as name, role, is_active FROM admin_users WHERE id = $1 AND is_active = true',
       [decoded.userId]
     );
 
@@ -209,7 +209,7 @@ router.get('/profile', async (req, res) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     const userResult = await pool.query(
-      'SELECT id, email, name, role, created_at, last_login FROM admin_users WHERE id = $1 AND is_active = true',
+      'SELECT id, email, CONCAT(first_name, \' \', last_name) as name, role, created_at, last_login_at as last_login FROM admin_users WHERE id = $1 AND is_active = true',
       [decoded.userId]
     );
 
