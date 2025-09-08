@@ -7,14 +7,12 @@
 const API_BASE_URL = (() => {
     const hostname = window.location.hostname;
     
-    console.log('Environment detected:', hostname);
-    
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://localhost:3000';
     } else if (hostname === 'staging.hairbyrhi.com') {
         return 'https://hairbyrhi-staging.up.railway.app';
     } else if (hostname === 'hairbyrhi.com' || hostname === 'www.hairbyrhi.com') {
-        return 'https://PRODUCTION_API_URL_HERE'; // Will update when production is ready
+        return 'https://hairbyrhi-production.up.railway.app';
     } else {
         console.error('Unknown environment:', hostname);
         return null;
