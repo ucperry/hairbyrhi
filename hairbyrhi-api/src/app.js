@@ -9,12 +9,20 @@ const app = express();
 app.use(helmet());
 // CORS configuration for production
 const corsOptions = {
+  const corsOptions = {
   origin: process.env.NODE_ENV === 'production' 
     ? [
         'https://hairbyrhi.com', 
+        'https://www.hairbyrhi.com'
+      ]
+    : process.env.NODE_ENV === 'staging'
+    ? [
+        'https://staging.hairbyrhi.com',
+        'https://hairbyrhi.com', 
         'https://www.hairbyrhi.com',
-        'http://hairbyrhi.com',  // Backup in case of redirect issues
-        'http://www.hairbyrhi.com'
+        'http://localhost:3000', 
+        'http://127.0.0.1:5500',
+        'http://localhost:5500'
       ]
     : [
         'http://localhost:3000', 
