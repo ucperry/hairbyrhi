@@ -7,18 +7,27 @@ require('dotenv').config();
 const app = express();
 // Security middleware
 app.use(helmet());
-// CORS configuration
-app.use(cors({
-    origin: process.env.NODE_ENV === 'production'
-        ? ['https://yourdomain.com'] // Replace with actual frontend domain
-        : [
-            'http://localhost:3000', 
-            'http://localhost:3001',
-            'http://127.0.0.1:5500',    // Live Server
-            'http://localhost:5500'     // Live Server alternative
-        ],
-    credentials: true
-}));
+// CORS configuration for production
+const corsOptions = {
+  origin: process.env.NODE_ENV === 'production' 
+    ? [
+        'https://hairbyrhi.com', 
+        'https://www.hairbyrhi.com',
+        'http://hairbyrhi.com',  // Backup in case of redirect issues
+        'http://www.hairbyrhi.com'
+      ]
+    : [
+        'http://localhost:3000', 
+        'http://127.0.0.1:5500',
+        'http://localhost:5500'
+      ],
+  credentials: true,
+  optionsSuccessStatus: 200,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
 
 // Rate limiting
 const limiter = rateLimit({
