@@ -3,17 +3,25 @@
    js/admin-auth.js
    ====================== */
 
-// API Configuration - Dynamic URL based on environment
+// Professional environment detection
 const API_BASE_URL = (() => {
     const hostname = window.location.hostname;
     
+    console.log('Environment detected:', hostname);
+    
     if (hostname === 'localhost' || hostname === '127.0.0.1') {
         return 'http://localhost:3000';
+    } else if (hostname === 'staging.hairbyrhi.com') {
+        return 'https://hairbyrhi-staging.up.railway.app';
+    } else if (hostname === 'hairbyrhi.com' || hostname === 'www.hairbyrhi.com') {
+        return 'https://PRODUCTION_API_URL_HERE'; // Will set when production is ready
     } else {
-        // Production API URL - we'll update this with your Railway URL
-        return 'https://RAILWAY_URL_PLACEHOLDER';
+        console.error('Unknown environment:', hostname);
+        return null;
     }
 })();
+
+console.log('API URL configured:', API_BASE_URL);
 
    // Admin Authentication System
 class AdminLogin {
