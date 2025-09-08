@@ -4,30 +4,22 @@ const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const authRoutes = require('./routes/auth');
 require('dotenv').config();
+
 const app = express();
+
 // Security middleware
 app.use(helmet());
-// CORS configuration for production
+
+// CORS configuration - Fixed syntax
 const corsOptions = {
-  origin: process.env.NODE_ENV === 'production' 
-    ? [
-        'https://hairbyrhi.com', 
-        'https://www.hairbyrhi.com'
-      ]
-    : process.env.NODE_ENV === 'staging'
-    ? [
-        'https://staging.hairbyrhi.com',
-        'https://hairbyrhi.com', 
-        'https://www.hairbyrhi.com',
-        'http://localhost:3000', 
-        'http://127.0.0.1:5500',
-        'http://localhost:5500'
-      ]
-    : [
-        'http://localhost:3000', 
-        'http://127.0.0.1:5500',
-        'http://localhost:5500'
-      ],
+  origin: [
+    'https://staging.hairbyrhi.com',
+    'https://hairbyrhi.com', 
+    'https://www.hairbyrhi.com',
+    'http://localhost:3000', 
+    'http://127.0.0.1:5500',
+    'http://localhost:5500'
+  ],
   credentials: true,
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
